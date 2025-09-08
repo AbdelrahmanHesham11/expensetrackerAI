@@ -4,7 +4,7 @@ function Navbar(){
     const user = checkUser();
     return(
         <div>
-            <h1>Navbar</h1>
+            <h1>Navbar gekki</h1>
         </div>
     )
 }
