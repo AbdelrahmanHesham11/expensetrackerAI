@@ -1,9 +1,15 @@
-function Home(){
+import Guest from "@/components/Guest";
+import { currentUser } from "@clerk/nextjs/server"
 
+async function  Home(){
+  const user = await currentUser();
+  if(!user){
+    return<Guest/>
+  }
   return(
-    <div className="bg-red-600">
+
     <h1>Home</h1>
-     </div>
+
   );
 }
 export default Home
