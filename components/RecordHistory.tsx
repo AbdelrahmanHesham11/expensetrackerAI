@@ -2,7 +2,11 @@ import getRecords from '@/app/actions/getRecords';
 import RecordItem from './RecordItem';
 import { Record } from '@/types/Record';
 
-const RecordHistory = async () => {
+interface RecordHistoryProps {
+  currency: string;
+}
+
+const RecordHistory = async ({ currency }: RecordHistoryProps) => {
   const { records, error } = await getRecords();
 
   if (error) {
@@ -62,8 +66,7 @@ const RecordHistory = async () => {
             No Expense Records Found
           </h4>
           <p className='text-gray-600 dark:text-gray-400 max-w-md mx-auto text-sm'>
-            Start tracking your expenses to see your spending history and
-            patterns here.
+            Start tracking your expenses to see your spending history and patterns here.
           </p>
         </div>
       </div>
@@ -87,7 +90,7 @@ const RecordHistory = async () => {
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4'>
         {records.map((record: Record) => (
-          <RecordItem key={record.id} record={record} />
+          <RecordItem key={record.id} record={record} currency={currency} />
         ))}
       </div>
     </div>
