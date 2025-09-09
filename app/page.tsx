@@ -5,6 +5,7 @@ import Guest from '@/components/Guest';
 import RecordChart from '@/components/RecordChart';
 import RecordHistory from '@/components/RecordHistory';
 import { currentUser } from '@clerk/nextjs/server';
+import CurrencyDropdown from "@/components/CurrencyDropdown";
 
 export default async function HomePage() {
   const user = await currentUser();
@@ -32,6 +33,7 @@ export default async function HomePage() {
                   <span className='text-white text-xs'>✓</span>
                 </div>
               </div>
+                    <CurrencyDropdown />
 
               {/* User Details - responsive text and layout */}
               <div className='flex-1 text-center sm:text-left'>
