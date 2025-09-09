@@ -2,11 +2,7 @@ import getRecords from '@/app/actions/getRecords';
 import RecordItem from './RecordItem';
 import { Record } from '@/types/Record';
 
-interface RecordHistoryProps {
-  currency: string;
-}
-
-const RecordHistory = async ({ currency }: RecordHistoryProps) => {
+const RecordHistory = async () => {
   const { records, error } = await getRecords();
 
   if (error) {
@@ -90,7 +86,7 @@ const RecordHistory = async ({ currency }: RecordHistoryProps) => {
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4'>
         {records.map((record: Record) => (
-          <RecordItem key={record.id} record={record} currency={currency} />
+          <RecordItem key={record.id} record={record} />
         ))}
       </div>
     </div>

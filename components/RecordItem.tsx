@@ -5,7 +5,6 @@ import deleteRecord from '@/app/actions/deleteRecord';
 
 interface RecordItemProps {
   record: Record;
-  currency: string;
 }
 
 const getCategoryEmoji = (category: string) => {
@@ -20,7 +19,7 @@ const getCategoryEmoji = (category: string) => {
   }
 };
 
-const RecordItem = ({ record, currency }: RecordItemProps) => {
+const RecordItem = ({ record }: RecordItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteRecord = async (recordId: string) => {
@@ -72,7 +71,7 @@ const RecordItem = ({ record, currency }: RecordItemProps) => {
               {new Date(record.date).toLocaleDateString()}
             </span>
             <span className='text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100'>
-              {currency} {record.amount.toFixed(2)}
+              {record.amount.toFixed(2)}
             </span>
           </div>
           <div className='flex items-center gap-2'>
