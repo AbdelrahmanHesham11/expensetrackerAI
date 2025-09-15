@@ -7,13 +7,13 @@ import updateGoal from '@/app/actions/updateGoal';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
 //fix these errors!
-import {
-  analyzeExpenses,
-  generateGoalSuggestions,
-  FinanceGoal as AIFinanceGoal,
-  AIInsight,
-  ExpenseRecord,
-} from '@/lib/ai';
+// import {
+//   analyzeExpenses,
+//   generateGoalSuggestions,
+//   FinanceGoal as AIFinanceGoal,
+//   AIInsight,
+//   ExpenseRecord,
+// } from '@/lib/ai';
 
 interface Goal {
   id: string;
