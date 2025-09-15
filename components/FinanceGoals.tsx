@@ -5,6 +5,8 @@ import getGoals from '@/app/actions/getGoals';
 import deleteGoal from '@/app/actions/deleteGoal';
 import updateGoal from '@/app/actions/updateGoal';
 import { useCurrency } from '@/contexts/CurrencyContext';
+
+//fix these errors!
 import {
   analyzeExpenses,
   generateGoalSuggestions,

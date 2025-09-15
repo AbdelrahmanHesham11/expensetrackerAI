@@ -6,6 +6,9 @@ import RecordChart from '@/components/RecordChart';
 import RecordHistory from '@/components/RecordHistory';
 import { currentUser } from '@clerk/nextjs/server';
 import CurrencyDropdown from "@/components/CurrencyDropdown";
+import FinanceGoals from "@/components/FinanceGoals";
+import IncomeForm from "@/components/IncomeForm";
+import BalanceTracker from "@/components/BalanceTracker";
 
 export default async function HomePage() {
   const user = await currentUser();
@@ -16,6 +19,31 @@ export default async function HomePage() {
     <main className='bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans min-h-screen transition-colors duration-300'>
       {/* Mobile-optimized container with responsive padding */}
       <div className='max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8'>
+        
+        {/* Top Section - Income Management */}
+        <div className='mb-6 sm:mb-8'>
+          <div className='text-center mb-4'>
+            <h1 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2'>
+              💰 Financial Dashboard
+            </h1>
+            <p className='text-sm sm:text-base text-gray-600 dark:text-gray-400'>
+              Manage your income and track your financial goals
+            </p>
+          </div>
+          
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6'>
+            {/* Income Form - Center on large screens */}
+            <div className='lg:col-start-2'>
+              <IncomeForm />
+            </div>
+            
+            {/* Balance Tracker - Hidden on mobile, shown on large screens */}
+            <div className='hidden lg:block'>
+              <BalanceTracker />
+            </div>
+          </div>
+        </div>
+
         {/* Mobile-first responsive grid */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6'>
           {/* Left Column - Stacked on mobile */}
@@ -85,6 +113,11 @@ export default async function HomePage() {
             </div>
             {/* Add New Expense */}
             <AddNewRecord />
+            
+            {/* Balance Tracker - Show on mobile/tablet */}
+            <div className='lg:hidden'>
+              <BalanceTracker />
+            </div>
           </div>
 
           {/* Right Column - Stacked below on mobile */}
@@ -99,6 +132,7 @@ export default async function HomePage() {
         <div className='mt-6 sm:mt-8 space-y-4 sm:space-y-6'>
           <AIInsights />
           <RecordHistory />
+          <FinanceGoals />
         </div>
       </div>
     </main>

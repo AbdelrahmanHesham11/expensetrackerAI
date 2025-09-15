@@ -1,5 +1,5 @@
+'use server';
 import OpenAI from 'openai';
-
 interface RawInsight {
   type?: string;
   title?: string;
