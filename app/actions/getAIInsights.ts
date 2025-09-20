@@ -2,7 +2,14 @@
 
 import { checkUser } from '@/lib/checkUser';
 import { db } from '@/lib/db';
-import { generateFinanceInsight, AIInsight, ExpenseRecord, IncomeRecord } from '@/lib/ai';
+import { 
+  generateFinanceInsight, 
+  generateGoalInsights,
+  AIInsight, 
+  ExpenseRecord, 
+  IncomeRecord,
+  GoalRecord 
+} from '@/lib/ai';
 
 export async function getAIInsights(): Promise<AIInsight[]> {
   try {
@@ -15,7 +22,6 @@ export async function getAIInsights(): Promise<AIInsight[]> {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    // 🔹 Fetch expenses
     const expenses = await db.record.findMany({
       where: {
         userId: user.clerkUserId,
@@ -26,10 +32,10 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 100, // Increased for better analysis
+      take: 100, 
     });
 
-    // 🔹 Fetch incomes
+
     const incomes = await db.income.findMany({
       where: {
         userId: user.clerkUserId,
@@ -43,9 +49,19 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       take: 50,
     });
 
-    // Check if user has any data
+
+    const goals = await db.goal.findMany({
+      where: {
+        userId: user.clerkUserId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+  
     if (expenses.length === 0 && incomes.length === 0) {
-      // Return default insights for new users
+
       return [
         {
           id: 'welcome-1',
@@ -68,7 +84,7 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       ];
     }
 
-    // Convert expenses to format expected by AI
+
     const expenseData: ExpenseRecord[] = expenses.map((expense) => ({
       id: expense.id,
       amount: expense.amount,
@@ -77,7 +93,7 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       date: expense.createdAt.toISOString(),
     }));
 
-    // Convert incomes to format expected by AI
+    
     const incomeData: IncomeRecord[] = incomes.map((income) => ({
       id: income.id,
       amount: income.amount,
@@ -85,16 +101,35 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       date: income.createdAt.toISOString(),
     }));
 
-    console.log(`📊 Generating insights: ${expenseData.length} expenses, ${incomeData.length} incomes`);
+    const goalData: GoalRecord[] = goals.map((goal) => ({
+      id: goal.id,
+      title: goal.title,
+      target: goal.target,
+      deadline: goal.deadline?.toISOString() || null,
+      progress: goal.progress || 0,
+    }));
 
-    // 🔹 Generate AI insights using both income and expenses
-    const insights = await generateFinanceInsight(expenseData, incomeData);
+    console.log(`📊 Generating insights: ${expenseData.length} expenses, ${incomeData.length} incomes, ${goalData.length} goals`);
+
+    const allInsights: AIInsight[] = [];
+
+
+    const financeInsights = await generateFinanceInsight(expenseData, incomeData);
+    allInsights.push(...financeInsights);
+
+    if (goalData.length > 0) {
+      const goalInsights = await generateGoalInsights(goalData, incomeData, expenseData);
+      allInsights.push(...goalInsights);
+    }
+
+
+    allInsights.sort((a, b) => b.confidence - a.confidence);
     
-    return insights;
+    return allInsights;
   } catch (error) {
     console.error('❌ Error getting AI insights:', error);
 
-    // Return fallback insights
+   
     return [
       {
         id: 'error-1',
