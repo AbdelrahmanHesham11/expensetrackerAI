@@ -1,4 +1,4 @@
-Finsight
+Finsights
 
 Finsight is a smart web app designed to help you gain clear insights into your finances.
 It simplifies tracking, analyzing, and understanding your spending, savings, or investments so you can make better financial decisions with confidence.
