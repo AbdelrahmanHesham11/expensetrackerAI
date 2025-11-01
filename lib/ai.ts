@@ -1,4 +1,5 @@
 'use server';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import OpenAI from 'openai';
 import { differenceInMonths, differenceInWeeks } from 'date-fns';
 
