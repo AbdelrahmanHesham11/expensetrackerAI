@@ -32,7 +32,7 @@ export default async function HomePage() {
           </div>
           
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6'>
-            {/* Income Form - Center on large screens */}
+            {/* Income Form - Center on large screens  LOL*/}
             <div className='lg:col-start-2'>
               <IncomeForm />
             </div>
