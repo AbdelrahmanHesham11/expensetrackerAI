@@ -2,7 +2,7 @@
 
 import { checkUser } from '@/lib/checkUser';
 import { db } from '@/lib/db';
-import { generateAIAnswer, ExpenseRecord } from '@/lib/ai';
+import { generateAIAnswer, ExpenseRecord, IncomeRecord } from '@/lib/ai';
 
 export async function generateInsightAnswer(question: string): Promise<string> {
   try {
@@ -11,10 +11,11 @@ export async function generateInsightAnswer(question: string): Promise<string> {
       throw new Error('User not authenticated');
     }
 
-    // Get user's recent expenses (last 30 days)
+    // look back 30 days
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
+    // 🔹 fetch expenses
     const expenses = await db.record.findMany({
       where: {
         userId: user.clerkUserId,
@@ -22,26 +23,47 @@ export async function generateInsightAnswer(question: string): Promise<string> {
           gte: thirtyDaysAgo,
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: 50, // Limit to recent 50 expenses for analysis
+      orderBy: { createdAt: 'desc' },
+      take: 50,
     });
 
-    // Convert to format expected by AI
     const expenseData: ExpenseRecord[] = expenses.map((expense) => ({
       id: expense.id,
       amount: expense.amount,
       category: expense.category || 'Other',
-      description: expense.text,
+      description: expense.text || '',
       date: expense.createdAt.toISOString(),
     }));
 
-    // Generate AI answer
-    const answer = await generateAIAnswer(question, expenseData);
+    // 🔹 fetch incomes
+    const incomes = await db.income.findMany({
+      where: {
+        userId: user.clerkUserId,
+        createdAt: {
+          gte: thirtyDaysAgo,
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+
+    const incomeData: IncomeRecord[] = incomes.map((income) => ({
+      id: income.id,
+      amount: income.amount,
+      source: income.source || 'Other',
+      description: income.text || '',
+      date: income.createdAt.toISOString(),
+    }));
+
+    // 🔹 hand both to AI
+    const answer = await generateAIAnswer(question, {
+      expenses: expenseData,
+      incomes: incomeData,
+    });
+
     return answer;
   } catch (error) {
     console.error('Error generating insight answer:', error);
-    return "I'm unable to provide a detailed answer at the moment. Please try refreshing the insights or check your connection.";
+    return "I'm unable to provide a detailed answer at the moment. Please try again.";
   }
 }

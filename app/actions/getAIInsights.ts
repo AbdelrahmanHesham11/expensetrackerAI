@@ -2,7 +2,14 @@
 
 import { checkUser } from '@/lib/checkUser';
 import { db } from '@/lib/db';
-import { generateExpenseInsights, AIInsight, ExpenseRecord } from '@/lib/ai';
+import { 
+  generateFinanceInsight, 
+  generateGoalInsights,
+  AIInsight, 
+  ExpenseRecord, 
+  IncomeRecord,
+  GoalRecord 
+} from '@/lib/ai';
 
 export async function getAIInsights(): Promise<AIInsight[]> {
   try {
@@ -11,7 +18,7 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       throw new Error('User not authenticated');
     }
 
-    //  user expenses from  (last 30 days)
+    // Look back 30 days for analysis
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -25,56 +32,111 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 50, // Limit to recent 50 expenses for analysis
+      take: 100, 
     });
 
-    if (expenses.length === 0) {
-      // Return default insights for new users
+
+    const incomes = await db.income.findMany({
+      where: {
+        userId: user.clerkUserId,
+        createdAt: {
+          gte: thirtyDaysAgo,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 50,
+    });
+
+
+    const goals = await db.goal.findMany({
+      where: {
+        userId: user.clerkUserId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+  
+    if (expenses.length === 0 && incomes.length === 0) {
+
       return [
         {
           id: 'welcome-1',
           type: 'info',
-          title: 'Welcome to ExpenseTracker AI!',
+          title: 'Welcome to FinSight AI!',
           message:
-            'Start adding your expenses to get personalized AI insights about your spending patterns.',
-          action: 'Add your first expense',
+            'Start adding your expenses and income to get personalized AI insights about your financial health.',
+          action: 'Add your first transaction',
           confidence: 1.0,
         },
         {
           id: 'welcome-2',
           type: 'tip',
-          title: 'Track Regularly',
+          title: 'Track Both Income & Expenses',
           message:
-            'For best results, try to log expenses daily. This helps our AI provide more accurate insights.',
-          action: 'Set daily reminders',
+            'For best insights, log both your income and expenses. This helps our AI analyze your savings rate and spending patterns.',
+          action: 'Learn about tracking',
           confidence: 1.0,
         },
       ];
     }
 
-    // Convert to format expected by AI
+
     const expenseData: ExpenseRecord[] = expenses.map((expense) => ({
       id: expense.id,
       amount: expense.amount,
       category: expense.category || 'Other',
-      description: expense.text,
+      description: expense.text || '',
       date: expense.createdAt.toISOString(),
     }));
 
-    // Generate AI insights
-    const insights = await generateExpenseInsights(expenseData);
-    return insights;
-  } catch (error) {
-    console.error('Error getting AI insights:', error);
+    
+    const incomeData: IncomeRecord[] = incomes.map((income) => ({
+      id: income.id,
+      amount: income.amount,
+      description: income.description || '',
+      date: income.createdAt.toISOString(),
+    }));
 
-    // Return fallback insights
+    const goalData: GoalRecord[] = goals.map((goal) => ({
+      id: goal.id,
+      title: goal.title,
+      target: goal.target,
+      deadline: goal.deadline?.toISOString() || null,
+      progress: goal.progress || 0,
+    }));
+
+    console.log(`📊 Generating insights: ${expenseData.length} expenses, ${incomeData.length} incomes, ${goalData.length} goals`);
+
+    const allInsights: AIInsight[] = [];
+
+
+    const financeInsights = await generateFinanceInsight(expenseData, incomeData);
+    allInsights.push(...financeInsights);
+
+    if (goalData.length > 0) {
+      const goalInsights = await generateGoalInsights(goalData, incomeData, expenseData);
+      allInsights.push(...goalInsights);
+    }
+
+
+    allInsights.sort((a, b) => b.confidence - a.confidence);
+    
+    return allInsights;
+  } catch (error) {
+    console.error('❌ Error getting AI insights:', error);
+
+   
     return [
       {
         id: 'error-1',
         type: 'warning',
-        title: 'Insights Temporarily Unavailable',
+        title: 'AI Insights Temporarily Unavailable',
         message:
-          "We're having trouble analyzing your expenses right now. Please try again in a few minutes.",
+          "We're having trouble analyzing your financial data right now. Please try again in a few minutes.",
         action: 'Retry analysis',
         confidence: 0.5,
       },
