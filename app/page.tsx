@@ -9,7 +9,7 @@ import CurrencyDropdown from "@/components/CurrencyDropdown";
 import FinanceGoals from "@/components/FinanceGoals";
 import IncomeForm from "@/components/IncomeForm";
 import BalanceTracker from "@/components/BalanceTracker";
-
+{/* TODO FIX LAYOUT */}
 export default async function HomePage() {
   const user = await currentUser();
   if (!user) {
