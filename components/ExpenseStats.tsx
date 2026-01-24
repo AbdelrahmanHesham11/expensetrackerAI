@@ -12,7 +12,7 @@ const ExpenseStats = async () => {
 
     const { record, daysWithRecords } = userRecordResult;
     const { bestExpense, worstExpense } = rangeResult;
-
+{/* TODO FIX LAYOUT */}{/* TODO FIX LAYOUT */}
     // Calculate average expense
     const validRecord = record || 0;
     const validDays =
