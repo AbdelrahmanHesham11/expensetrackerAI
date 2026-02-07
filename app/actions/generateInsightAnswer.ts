@@ -50,8 +50,8 @@ export async function generateInsightAnswer(question: string): Promise<string> {
     const incomeData: IncomeRecord[] = incomes.map((income) => ({
       id: income.id,
       amount: income.amount,
-      source: income.source || 'Other',
-      description: income.text || '',
+      source: income.description || 'Other',
+      description: income.description || '',
       date: income.createdAt.toISOString(),
     }));
 

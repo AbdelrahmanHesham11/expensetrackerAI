@@ -6,6 +6,27 @@ import deleteGoal from '@/app/actions/deleteGoal';
 import updateGoal from '@/app/actions/updateGoal';
 import { useCurrency } from '@/contexts/CurrencyContext';
 
+interface AIInsight {
+  id: string;
+  title: string;
+  message: string;
+  action?: string;
+}
+
+interface AIFinanceGoal {
+  id: string;
+  title: string;
+  targetAmount: number;
+  deadline?: string;
+}
+
+interface ExpenseRecord {
+  id: string;
+  description: string;
+  amount: number;
+  date: string;
+  category?: string;
+}
 
 interface Goal {
   id: string;
