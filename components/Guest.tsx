@@ -252,7 +252,7 @@ const Guest = () => {
                             <div className='px-2 py-0.5 bg-blue-500/20 border border-blue-500/30 rounded text-[10px] font-bold text-blue-600 dark:text-blue-300'>NEW</div>
                           </div>
                           <p className='text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-3'>
-                            Your entertainment spending decreased by <span className='font-bold text-green-600 dark:text-green-400'>32%</span> this month. You're on track to save an additional <span className='font-bold text-blue-600 dark:text-blue-300'>$890</span> by year-end.
+                            Your entertainment spending decreased by <span className='font-bold text-green-600 dark:text-green-400'>32%</span> this month. You are on track to save an additional <span className='font-bold text-blue-600 dark:text-blue-300'>$890</span> by year-end.
                           </p>
                           <button className='text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 group/btn transition-colors'>
                             View full analysis
@@ -367,7 +367,7 @@ const Guest = () => {
               Frequently Asked Questions
             </h2>
             <p className='text-xl text-slate-600 dark:text-slate-400 font-light max-w-[700px]'>
-              Everything you need to know about FinSight AI's institutional-grade financial intelligence platform.
+              Everything you need to know about FinSight AIs institutional-grade financial intelligence platform.
             </p>
           </div>
 
@@ -421,7 +421,7 @@ const Guest = () => {
               </h2>
 
               <p className='text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-[600px] mx-auto font-light'>
-                Join thousands of users who've upgraded to institutional-grade financial intelligence.
+                Join thousands of users who have upgraded to institutional-grade financial intelligence.
               </p>
 
               <SignInButton>
