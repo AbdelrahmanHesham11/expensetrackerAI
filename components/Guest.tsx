@@ -279,8 +279,8 @@ const Guest = () => {
                 <div className='text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium'>Monthly Savings</div>
                 <div className='text-2xl font-black text-slate-900 dark:text-white mb-1'>$2,847</div>
                 <div className='flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-bold'>
-                  <svg className='w-3 h-3' fill='currentColor' viewBox='0 0 20 20'>
-                    <path fillRule='evenodd' d='M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z' clipRule='evenodd'/>
+                  <svg className='w-3 h-3' fill='currentColor' viewBox='0 0 24 24'>
+                    <path d='M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z'/>
                   </svg>
                   <span>+24%</span>
                 </div>
@@ -367,7 +367,7 @@ const Guest = () => {
               Frequently Asked Questions
             </h2>
             <p className='text-xl text-slate-600 dark:text-slate-400 font-light max-w-[700px]'>
-              Everything you need to know about FinSight AIs institutional-grade financial intelligence platform.
+              Everything you need to know about FinSight AI&apos;s institutional-grade financial intelligence platform.
             </p>
           </div>
 
@@ -421,54 +421,26 @@ const Guest = () => {
               </h2>
 
               <p className='text-xl text-slate-600 dark:text-slate-300 mb-12 max-w-[600px] mx-auto font-light'>
-                Join thousands of users who have upgraded to institutional-grade financial intelligence.
+                Join thousands of professionals using AI to optimize their financial future.
               </p>
 
-              <SignInButton>
-                <button className='group/cta relative px-12 py-6 overflow-hidden rounded-2xl font-black text-xl shadow-[0_0_80px_rgba(59,130,246,0.5)] hover:shadow-[0_0_120px_rgba(59,130,246,0.7)] transition-all duration-300 transform hover:scale-105'>
-                  <div className='absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 bg-[length:200%_auto] animate-[gradient_8s_ease_infinite]'></div>
-                  <div className='absolute inset-0 bg-gradient-to-t from-black/30 to-transparent'></div>
-                  <span className='relative z-10 flex items-center gap-3 justify-center text-white'>
-                    Start Free Today
-                    <svg className='w-7 h-7 group-hover/cta:translate-x-2 transition-transform duration-300' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={3} d='M13 7l5 5m0 0l-5 5m5-5H6' />
-                    </svg>
-                  </span>
-                </button>
-              </SignInButton>
-
-              <div className='flex items-center justify-center gap-8 mt-10 text-sm text-slate-600 dark:text-slate-400'>
-                {[
-                  { text: 'Free forever plan', icon: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z', color: 'green' },
-                  { text: 'No credit card', icon: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z', color: 'blue' },
-                  { text: 'Setup in 60 seconds', icon: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z', color: 'indigo' },
-                ].map((item, i) => (
-                  <div key={i} className='flex items-center gap-2'>
-                    <svg className={`w-5 h-5 text-${item.color}-500 dark:text-${item.color}-400`} fill='currentColor' viewBox='0 0 20 20'>
-                      <path fillRule='evenodd' d={item.icon} clipRule='evenodd'/>
-                    </svg>
-                    <span className='font-medium'>{item.text}</span>
-                  </div>
-                ))}
+              <div className='flex flex-col sm:flex-row gap-5 justify-center'>
+                <SignInButton>
+                  <button className='group relative px-12 py-6 overflow-hidden rounded-2xl font-black text-xl shadow-[0_0_60px_rgba(59,130,246,0.4)] transition-all duration-300'>
+                    <div className='absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600'></div>
+                    <span className='relative z-10 flex items-center gap-3 text-white'>
+                      Get Started Now
+                      <svg className='w-6 h-6 group-hover:translate-x-2 transition-transform' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M13 7l5 5m0 0l-5 5m5-5H6' />
+                      </svg>
+                    </span>
+                  </button>
+                </SignInButton>
               </div>
-
             </div>
           </div>
-
         </div>
       </section>
-
-      <style jsx>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-      `}</style>
-
     </div>
   );
 };
