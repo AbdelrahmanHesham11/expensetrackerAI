@@ -8,140 +8,98 @@ import { useState } from 'react';
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const navLinks = [
+    { href: '/', label: 'Home', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+    { href: '/about', label: 'About', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { href: '/contact', label: 'Contact', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+  ];
 
   return (
-    <nav className='sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30 transition-colors duration-300'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex items-center justify-between h-14 sm:h-16'>
-          {/* Logo Section */}
-          <div className='flex items-center'>
-            <Link
-              href='/'
-              className='flex items-center gap-2 sm:gap-3 flex-shrink-0 group transition-all duration-300 hover:scale-105'
-              onClick={closeMobileMenu}
-            >
-              <div className='w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gradient-to-br from-slate-700 via-gray-600 to-slate-800 dark:from-slate-600 dark:via-gray-500 dark:to-slate-700 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3 border border-slate-500/30 dark:border-slate-400/20'>
-                <span className='text-amber-400 dark:text-amber-300 text-xs sm:text-sm md:text-lg font-bold'>
-                  💰
-                </span>
+    <nav className='sticky top-0 z-50 bg-slate-950/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'>
+      <div className='max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16'>
+        <div className='flex items-center justify-between h-16 md:h-20'>
+          
+          {/* Logo */}
+          <Link href='/' className='flex items-center gap-3 group' onClick={() => setIsMobileMenuOpen(false)}>
+            <div className='relative'>
+              <div className='absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 blur-lg group-hover:blur-xl transition-all'></div>
+              <div className='relative w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform duration-300'>
+                <svg className='w-6 h-6 text-white' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' />
+                </svg>
               </div>
-              <span className='text-sm sm:text-base md:text-lg lg:text-xl font-bold bg-gradient-to-r from-slate-700 via-gray-600 to-slate-800 dark:from-slate-300 dark:via-gray-200 dark:to-slate-100 bg-clip-text text-transparent'>
-                <span className='hidden sm:inline'>FinSight AI</span>
-                <span className='sm:hidden'>FinSight AI</span>
-              </span>
-            </Link>
-          </div>
+            </div>
+            <span className='text-xl font-black bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-transparent'>
+              FinSight AI
+            </span>
+          </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className='hidden md:flex items-center space-x-1'>
-            <Link
-              href='/'
-              className='relative text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-slate-100/70 dark:hover:bg-slate-700/50 group'
-            >
-              <span className='relative z-10'>Home</span>
-              <div className='absolute inset-0 bg-gradient-to-r from-slate-200/20 to-gray-200/20 dark:from-slate-600/20 dark:to-gray-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200'></div>
-            </Link>
-
-            <Link
-              href='/about'
-              className='relative text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-slate-100/70 dark:hover:bg-slate-700/50 group'
-            >
-              <span className='relative z-10'>About</span>
-              <div className='absolute inset-0 bg-gradient-to-r from-slate-200/20 to-gray-200/20 dark:from-slate-600/20 dark:to-gray-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200'></div>
-            </Link>
-
-            <Link
-              href='/contact'
-              className='relative text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-slate-100/70 dark:hover:bg-slate-700/50 group'
-            >
-              <span className='relative z-10'>Contact</span>
-              <div className='absolute inset-0 bg-gradient-to-r from-slate-200/20 to-gray-200/20 dark:from-slate-600/20 dark:to-gray-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200'></div>
-            </Link>
+          {/* Desktop Navigation */}
+          <div className='hidden md:flex items-center gap-2'>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className='group relative px-4 py-2 text-slate-300 hover:text-white font-medium text-sm transition-all duration-300'
+              >
+                <span className='relative z-10 flex items-center gap-2'>
+                  <svg className='w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d={link.icon} />
+                  </svg>
+                  {link.label}
+                </span>
+                <div className='absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity'></div>
+              </Link>
+            ))}
           </div>
 
           {/* Right Section */}
-          <div className='flex items-center space-x-1 sm:space-x-2'>
-            {/* Theme Toggle */}
-            <div className='p-0.5 sm:p-1'>
-              <ThemeToggle />
-            </div>
+          <div className='flex items-center gap-3'>
+            <ThemeToggle />
 
-            {/* Authentication - Desktop */}
+            {/* Desktop Auth */}
             <div className='hidden sm:block'>
               <SignedOut>
                 <SignInButton>
-                  <button className='relative overflow-hidden bg-gradient-to-r from-slate-700 via-gray-600 to-slate-800 hover:from-slate-800 hover:via-gray-700 hover:to-slate-900 dark:from-slate-600 dark:via-gray-500 dark:to-slate-700 dark:hover:from-slate-500 dark:hover:via-gray-400 dark:hover:to-slate-600 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 border border-slate-500/20 dark:border-slate-400/20'>
-                    <div className='relative z-10 flex items-center gap-1 sm:gap-2'>
-                      <span>Sign In</span>
-                      <svg
-                        className='w-3 h-3 sm:w-4 sm:h-4'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1'
-                        />
+                  <button className='group relative px-6 py-2.5 overflow-hidden rounded-xl font-semibold text-sm shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] transition-all duration-300'>
+                    <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600'></div>
+                    <span className='relative z-10 flex items-center gap-2 text-white'>
+                      Sign In
+                      <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1' />
                       </svg>
-                    </div>
-                    <div className='absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300'></div>
+                    </span>
                   </button>
                 </SignInButton>
               </SignedOut>
 
               <SignedIn>
-                <div className='p-0.5 sm:p-1 rounded-lg sm:rounded-xl bg-gradient-to-r from-slate-100/60 to-gray-100/60 dark:from-slate-800/40 dark:to-gray-800/40 backdrop-blur-sm border border-slate-300/30 dark:border-slate-600/30'>
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        avatarBox:
-                          'w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform duration-200',
-                        userButtonBox: 'flex items-center justify-center',
-                      },
-                    }}
-                  />
+                <div className='relative'>
+                  <div className='absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 blur-lg'></div>
+                  <div className='relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-1'>
+                    <UserButton
+                      appearance={{
+                        elements: {
+                          avatarBox: 'w-8 h-8 hover:scale-110 transition-transform duration-200',
+                        },
+                      }}
+                    />
+                  </div>
                 </div>
               </SignedIn>
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              onClick={toggleMobileMenu}
-              className='md:hidden p-1.5 sm:p-2 rounded-lg sm:rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 transition-all duration-200 active:scale-95'
-              aria-label='Toggle mobile menu'
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className='md:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-200 active:scale-95'
+              aria-label='Toggle menu'
             >
-              <svg
-                className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 ${
-                  isMobileMenuOpen ? 'rotate-90' : ''
-                }`}
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
+              <svg className={`w-6 h-6 text-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : ''}`} fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                 {isMobileMenuOpen ? (
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M6 18L18 6M6 6l12 12'
-                  />
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
                 ) : (
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M4 6h16M4 12h16M4 18h16'
-                  />
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
                 )}
               </svg>
             </button>
@@ -149,77 +107,55 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <div
-          className={`md:hidden transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen
-              ? 'max-h-96 opacity-100 pb-3 sm:pb-4'
-              : 'max-h-0 opacity-0 overflow-hidden'
-          }`}
-        >
-          <div className='px-2 pt-2 pb-3 space-y-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-600/50 mt-2 shadow-lg'>
-            {/* Mobile Navigation Links */}
-            <Link
-              href='/'
-              className='flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 text-sm font-medium transition-all duration-200 active:scale-95'
-              onClick={closeMobileMenu}
-            >
-              <span className='text-base'>🏠</span>
-              <span>Home</span>
-            </Link>
-            <Link
-              href='/about'
-              className='flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 text-sm font-medium transition-all duration-200 active:scale-95'
-              onClick={closeMobileMenu}
-            >
-              <span className='text-base'>ℹ️</span>
-              <span>About</span>
-            </Link>
-            <Link
-              href='/contact'
-              className='flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-700/50 text-sm font-medium transition-all duration-200 active:scale-95'
-              onClick={closeMobileMenu}
-            >
-              <span className='text-base'>📞</span>
-              <span>Contact</span>
-            </Link>
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+          <div className='bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 mt-4 space-y-2'>
+            
+            {/* Mobile Nav Links */}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className='flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 active:scale-95'
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d={link.icon} />
+                </svg>
+                <span className='font-medium'>{link.label}</span>
+              </Link>
+            ))}
 
-            {/* Mobile Authentication */}
-            <div className='pt-3 border-t border-gray-200/50 dark:border-gray-600/50'>
+            {/* Mobile Auth */}
+            <div className='pt-4 border-t border-white/10'>
               <SignedOut>
                 <SignInButton>
                   <button
-                    className='w-full bg-gradient-to-r from-slate-700 via-gray-600 to-slate-800 hover:from-slate-800 hover:via-gray-700 hover:to-slate-900 dark:from-slate-600 dark:via-gray-500 dark:to-slate-700 dark:hover:from-slate-500 dark:hover:via-gray-400 dark:hover:to-slate-600 text-white px-4 py-3 rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 border border-slate-500/20 dark:border-slate-400/20'
-                    onClick={closeMobileMenu}
+                    className='w-full group relative px-6 py-3 overflow-hidden rounded-xl font-semibold shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-300 active:scale-95'
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <span>Sign In</span>
-                    <svg
-                      className='w-4 h-4'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1'
-                      />
-                    </svg>
+                    <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600'></div>
+                    <span className='relative z-10 flex items-center justify-center gap-2 text-white'>
+                      Sign In
+                      <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1' />
+                      </svg>
+                    </span>
                   </button>
                 </SignInButton>
               </SignedOut>
 
               <SignedIn>
-                <div className='flex items-center justify-center p-3 rounded-xl bg-gradient-to-r from-slate-100/60 to-gray-100/60 dark:from-slate-800/40 dark:to-gray-800/40 backdrop-blur-sm border border-slate-300/30 dark:border-slate-600/30'>
-                  <UserButton
-                    appearance={{
-                      elements: {
-                        avatarBox:
-                          'w-8 h-8 hover:scale-110 transition-transform duration-200',
-                        userButtonBox: 'flex items-center justify-center',
-                      },
-                    }}
-                  />
+                <div className='relative'>
+                  <div className='absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 blur-lg'></div>
+                  <div className='relative flex items-center justify-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3'>
+                    <UserButton
+                      appearance={{
+                        elements: {
+                          avatarBox: 'w-10 h-10 hover:scale-110 transition-transform duration-200',
+                        },
+                      }}
+                    />
+                  </div>
                 </div>
               </SignedIn>
             </div>
