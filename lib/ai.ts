@@ -4,9 +4,24 @@
 
 import OpenAI from 'openai';
 import { differenceInMonths, differenceInWeeks } from 'date-fns';
-import type { ExpenseRecord, IncomeRecord, Goal } from '@/types/finance';
+import type { ExpenseRecord, IncomeRecord } from '@/types/finance';
 
+export interface GoalRecord {
+  id: string;
+  title: string;
+  target: number;
+  progress: number;
+  deadline?: string | Date;
+}
 
+export interface AIInsight {
+  id: string;
+  type: 'warning' | 'info' | 'success' | 'tip';
+  title: string;
+  message: string;
+  action?: string;
+  confidence: number;
+}
 interface RawInsight {
   type?: string;
   title?: string;
@@ -15,7 +30,9 @@ interface RawInsight {
   confidence?: number;
 }
 
-// Simple rate limiter for API calls
+export type { ExpenseRecord, IncomeRecord };
+
+
 class RateLimiter {
   private requests: number[] = [];
   private maxRequests: number;
@@ -95,9 +112,6 @@ async function makeOpenAIRequest(
     }
   }
 }
-
-
-
 
 export interface AIInsight {
   id: string;

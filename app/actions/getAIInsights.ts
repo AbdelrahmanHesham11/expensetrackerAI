@@ -101,13 +101,13 @@ export async function getAIInsights(): Promise<AIInsight[]> {
       date: income.createdAt.toISOString(),
     }));
 
-    const goalData: GoalRecord[] = goals.map((goal) => ({
-      id: goal.id,
-      title: goal.title,
-      target: goal.target,
-      deadline: goal.deadline?.toISOString() || null,
-      progress: goal.progress || 0,
-    }));
+      const goalData: GoalRecord[] = goals.map((goal) => ({
+            id: goal.id,
+            title: goal.title,
+            target: goal.target,
+            progress: goal.progress || 0,
+            deadline: goal.deadline?.toISOString() ?? undefined,
+          }));
 
     console.log(`📊 Generating insights: ${expenseData.length} expenses, ${incomeData.length} incomes, ${goalData.length} goals`);
 

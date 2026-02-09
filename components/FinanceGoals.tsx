@@ -6,7 +6,7 @@ import deleteGoal from '@/app/actions/deleteGoal';
 import updateGoal from '@/app/actions/updateGoal';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { analyzeExpensesAction, generateGoalSuggestionsAction} from '@/app/actions/aiActions';
-import { ExpenseRecord, Goal } from '@/types/finance';
+import { ExpenseRecord, Goal as GoalType } from '@/types/finance';
 
 interface AIInsight {
   id: string;
@@ -123,8 +123,8 @@ const runAIAnalysis = async () => {
 };
 
 
-    setAiInsights(insights);
-    setAiSuggestions(suggestions);
+    setAiInsights(aiInsights);
+    setAiSuggestions(aiSuggestions);
     setIsAnalyzing(false);
   };
 
