@@ -5,6 +5,8 @@ import getGoals from '@/app/actions/getGoals';
 import deleteGoal from '@/app/actions/deleteGoal';
 import updateGoal from '@/app/actions/updateGoal';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { analyzeExpensesAction, generateGoalSuggestionsAction} from '@/app/actions/aiActions';
+import { ExpenseRecord, Goal } from '@/types/finance';
 
 interface AIInsight {
   id: string;
@@ -20,13 +22,7 @@ interface AIFinanceGoal {
   deadline?: string;
 }
 
-interface ExpenseRecord {
-  id: string;
-  description: string;
-  amount: number;
-  date: string;
-  category?: string;
-}
+
 
 interface Goal {
   id: string;
@@ -41,6 +37,7 @@ interface FinanceGoalsProps {
   currentIncome?: number;
   monthlyExpenses?: number;
 }
+
 
 const FinanceGoals: React.FC<FinanceGoalsProps> = ({
   expenses = [],
@@ -63,8 +60,13 @@ const FinanceGoals: React.FC<FinanceGoalsProps> = ({
   // Fetch goals from database
   const fetchGoals = async () => {
     const { data, error } = await getGoals();
-    if (!error && data) setGoals(data);
-  };
+    if (!error && data) {
+      const sanitizedData = data.map(goal => ({
+        ...goal,
+        deadline: goal.deadline ?? undefined // Converts null to undefined
+      }));
+      setGoals(sanitizedData);
+    }};
 
   useEffect(() => {
     fetchGoals();
@@ -104,23 +106,35 @@ const FinanceGoals: React.FC<FinanceGoalsProps> = ({
   const runAIAnalysis = async () => {
     setIsAnalyzing(true);
 
-    // Generate insights from expenses
-    const insights = await analyzeExpenses(expenses);
+const runAIAnalysis = async () => {
+  setIsAnalyzing(true);
 
-    // Generate AI suggested goals
-    const suggestions = await generateGoalSuggestions(goals, currentIncome, monthlyExpenses);
+  const insights = await analyzeExpensesAction(expenses);
+
+  const suggestions = await generateGoalSuggestionsAction(
+    goals,
+    currentIncome,
+    monthlyExpenses
+  );
+
+  setAiInsights(insights);
+  setAiSuggestions(suggestions);
+  setIsAnalyzing(false);
+};
+
 
     setAiInsights(insights);
     setAiSuggestions(suggestions);
     setIsAnalyzing(false);
   };
 
-  // Optional: auto-run AI whenever income/expenses change
-  useEffect(() => {
-    if (currentIncome > 0 || monthlyExpenses > 0) {
-      runAIAnalysis();
-    }
-  }, [currentIncome, monthlyExpenses, expenses]);
+    useEffect(() => {
+      if (currentIncome > 0 || monthlyExpenses > 0) {
+        runAIAnalysis();
+      }
+    
+    }, [currentIncome, monthlyExpenses, expenses]);
+
 
   return (
     <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-xl border border-gray-100/50 dark:border-slate-700/50">

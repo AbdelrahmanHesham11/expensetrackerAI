@@ -3,6 +3,7 @@
 import { checkUser } from '@/lib/checkUser';
 import { db } from '@/lib/db';
 import { generateAIAnswer, ExpenseRecord, IncomeRecord } from '@/lib/ai';
+import type { ExpenseRecord, IncomeRecord, Goal } from '@/types/finance';
 
 export async function generateInsightAnswer(question: string): Promise<string> {
   try {

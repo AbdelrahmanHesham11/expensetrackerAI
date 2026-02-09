@@ -4,6 +4,8 @@
 
 import OpenAI from 'openai';
 import { differenceInMonths, differenceInWeeks } from 'date-fns';
+import type { ExpenseRecord, IncomeRecord, Goal } from '@/types/finance';
+
 
 interface RawInsight {
   type?: string;
@@ -94,28 +96,8 @@ async function makeOpenAIRequest(
   }
 }
 
-export interface ExpenseRecord {
-  id: string;
-  amount: number;
-  category: string;
-  description: string;
-  date: string;
-}
 
-export interface IncomeRecord {
-  id: string;
-  amount: number;
-  description?: string;
-  date: string;
-}
 
-export interface GoalRecord {
-  id: string;
-  title: string;
-  target: number;
-  deadline?: string | null;
-  progress: number;
-}
 
 export interface AIInsight {
   id: string;
@@ -477,4 +459,30 @@ export async function generateGoalInsights(
       },
     ];
   }
+}
+
+
+
+export async function analyzeExpenses(
+  expenses: ExpenseRecord[]
+) {
+  return generateExpenseInsights(expenses);
+}
+
+export async function generateGoalSuggestions(
+  goals: GoalRecord[],
+  income: number,
+  monthlyExpenses: number
+) {
+  // Simple heuristic for now (AI optional later)
+  if (income <= monthlyExpenses) return [];
+
+  return [
+    {
+      id: 'emergency-fund',
+      title: 'Emergency Fund',
+      targetAmount: income * 3,
+      deadline: '6 months'
+    }
+  ];
 }
