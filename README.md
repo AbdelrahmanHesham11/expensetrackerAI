@@ -35,5 +35,10 @@ React
 TailwindCSS
  (for styling)
 
+ ###########################
+
+ NEXT UPDATE COMING IN MAY
+
 dotenv
  (for environment variable management)
+#
